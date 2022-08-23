@@ -1,0 +1,76 @@
+algoritmo "exercicio_3"
+
+var
+	valor_aplicado, quantidade_meses_investido, imposto_devido, rendimento_aplicacao_mes, rendimento_real_mes, montante_real, rendimento_tatal, imposto_devido: real
+	tipo_investimento: caractere
+	aux_contagem = 1
+	montante = 0
+	ir_menor_6 = 0.225
+	ir_menor_12 = 0.2
+	ir_menor_24 = 0.175
+	ir_maior_24 = 0.15
+	
+inicio:
+	
+	// Este programa realiza o calculo do rendimento e imposto em aplicacoes de renda fixa (Poupança, CDB ou fundos)
+
+	imprima "Digite o tipo de aplicao."
+	leia (tipo_investimento)
+	
+	imprima "Digite o rendimento desta aplicao ao mes em %."
+	leia (rendimento_aplicao_mes)
+	
+	imprima "Digite o valor aplicao."
+	leia (valor_aplicado)
+	
+	imprima "Digite o tempo de investimento em meses"
+	leia (quantidade_meses_investido)
+	
+	montante_real = valor_aplicado
+	
+	Enquanto: aux_contagem <= quantidade_meses_investido
+		
+		rendimento_real_mes = rendimento_aplicacao_mes * montante_real
+		
+		montante_real = montante_real + rendimento_real_mes
+		
+		aux_contagem = aux_contagem + 1 
+		
+		
+	Fim - Enquanto
+	
+	rendimento_total = montante_real - valor_aplicado
+	
+	Se tipo_investimento == "Poupança"
+		
+		imprima "O seu redimento total foi R$ {rendimento_total} e o imposto de renda devido foi R$ 0,00. 
+	Senão
+		
+		Se quantidade_meses_investido <= 6
+			
+			imposto_devido = (rendimento_total * ir_menor_6) * 100
+			imprima "O seu rendimento total foi R$ {rendimento_total} e o imposto de renda devido foi R$ {imposto_devido}"
+		
+		Senão Se quantidade_meses_investimento > 6 E quantidade_meses_invstimento <= 12
+			
+			imposto_devido = (rendimento_total * ir_menor_12) * 100
+			imprima "O seu rendimento total foi R$ {rendimento_total} e o imposto de renda devido foi R$ {imposto_devido}"
+		
+		Senão Se quntidade_meses_investimento > 12 E quantidade_meses_investimento <= 24
+			
+			imposto_devido = (rendimento_total * ir_menor_24) * 100
+			imprima "O seu rendimento total foi R$ {rendimento_total} e o imposto de renda devido foi R$ {imposto_devido}"
+		
+		Senão Se quntidade_meses_investimento > 24
+			
+			imposto_devido = (rendimento_total * ir_maior_24) * 100
+			imprima "O seu rendimento total foi R$ {rendimento_total} e o imposto de renda devido foi R$ {imposto_devido}"
+		
+		Fim Se
+		
+	Fim Se
+	
+	
+Fim
+			
+
