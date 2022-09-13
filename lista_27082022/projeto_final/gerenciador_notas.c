@@ -71,18 +71,18 @@ void calculo_media(){
 
     indice_auxiliar_aluno = 1;
 
-    for (int i = 1; i <= 5; i++)
+    for (int z = 1; z <= 5; z++)
     {
-        if (media_individual[i] > maior_nota_media)
+        if (media_individual[z] > maior_nota_media)
         {
-            maior_nota_media = media_individual[i];
-            indice_auxiliar_maior = i;
+            maior_nota_media = media_individual[z];
+            indice_auxiliar_maior = z;
 
         } 
-        if (media_individual[i] < menor_nota_media)
+        if (media_individual[z] < menor_nota_media)
         {
-            menor_nota_media = media_individual[i];
-            indice_auxiliar_menor = i;
+            menor_nota_media = media_individual[z];
+            indice_auxiliar_menor = z;
         }        
         
     }
@@ -94,12 +94,108 @@ void calculo_media(){
 
 void calculo_recuperacao(){
 
-    char alunos_aprovados[5][20];
-    char aluno_reprovados[5][20];
+    int indice_alunos_aprovados[5];
+    int indice_alunos_reprovados[5];
+    int exame_recuperacao, criterio_avaliacao;
+    float nota_recuperacao, nota_recuperacao_consolidada;
 
     printf("-------------------------------------------\n");
 
+// Verificação dos alunos aprovados e em recuperação
+
+    for (int i = 1; i <= 5; i++)
+    {
+        if (media_individual[i] >= 60 )
+        {   
+            int aux_aprovados = 0;
+            indice_alunos_aprovados[aux_aprovados] = i;
+            printf("O aluno %s obteve uma média de %.2f e esta APROVADO!.\n", nomes_alunos[i], media_individual[i]);
+            aux_aprovados++;
+        }
+        else if (media_individual[i] < 60)
+        {
+            int aux_reprovados = 0;
+            indice_alunos_reprovados[aux_reprovados] = i;
+            printf("O aluno %s obteve uma média de %.2f e esta em RECUPERAÇÂO!.\n", nomes_alunos[i], media_individual[i]);
+            aux_reprovados++;
+        }
+        
+    }
     
+    printf("-------------------------------------------\n");
+
+    if (sizeof(indice_alunos_reprovados)!=0)
+    {
+        for (int i = 0; i <= sizeof(indice_alunos_reprovados); i++)
+        {
+        
+        printf("Deseja aplicar a recuperação para o aluno %s?\n", nomes_alunos[indice_alunos_reprovados[i]]);
+        printf("Digite: 0 = Não.\n");
+        printf("Digite: 1 = Sim.\n");
+        scanf("%d", &exame_recuperacao);
+
+        switch (exame_recuperacao)
+        {
+        case 0:
+            printf("O aluno %s não fará recuperação !\n", nomes_alunos[indice_alunos_reprovados[i]]);
+            break;
+        case 1:
+            printf("Informe o critério de avaliação:\n");
+            printf("1: Nota Recueperação > 60.\n");
+            printf("2: (Nota + Nota Recuperação)/2.\n");
+            scanf("%d", &criterio_avaliacao);
+
+            switch (criterio_avaliacao)
+            {
+            case 1:
+                printf("Informe a nota de recuperação do aluno %s.\n", nomes_alunos[indice_alunos_reprovados[i]]);
+                scanf("%f", &nota_recuperacao);
+
+                if (nota_recuperacao > 60)
+                {
+                    printf("O aluno %s foi aprovado na recuperação.\n", nomes_alunos[indice_alunos_reprovados[i]]);
+
+                } else 
+                {
+                    printf("O aluno %s não foi aprovado na recuperação.\n", nomes_alunos[indice_alunos_reprovados[i]]);
+
+                }
+                
+                break;
+            case 2:
+
+                printf("Informe a nota de recuperação do aluno %s.\n", nomes_alunos[indice_alunos_reprovados[i]]);
+                scanf("%f", &nota_recuperacao);
+
+                nota_recuperacao_consolidada = (nota_recuperacao + media_individual[i])/2;
+
+                 if (nota_recuperacao_consolidada > 60)
+                {
+                    printf("O aluno %s foi aprovado na recuperação.\n", nomes_alunos[indice_alunos_reprovados[i]]);
+
+                } else 
+                {
+                    printf("O aluno %s não foi aprovado na recuperação.\n", nomes_alunos[indice_alunos_reprovados[i]]);
+
+                }
+            /*
+            default:
+                printf("Valor inválido.\n");
+                break;
+            */
+            }
+            /*
+        default:
+            printf("Valor inválido.\n");
+            break;
+            */
+        }
+        }
+
+    } else {
+        printf("Nenhum aluno esta em recuperação este semestre !\n");
+        printf("Fim do programa.\n");
+    }       
 
 }
 
@@ -108,6 +204,7 @@ int main(){
 
     cadastro_nome_notas_alunos();
     calculo_media();
+    calculo_recuperacao();
 
     return 0;
 }
