@@ -34,6 +34,8 @@ void calculo_media(){
     int indice_auxiliar_menor, indice_auxiliar_maior;
     float menor_nota_media = 999; // Variável para realizar a comparação das notas
     float maior_nota_media = 0; // Variável para realizar a comparação das notas
+   
+    
 
     // Cálculo média geral da turma
 
@@ -98,25 +100,27 @@ void calculo_recuperacao(){
     int indice_alunos_reprovados[5];
     int exame_recuperacao, criterio_avaliacao;
     float nota_recuperacao, nota_recuperacao_consolidada;
+    int aux_aprovados = 0;
+    int aux_reprovados = 0;
 
     printf("-------------------------------------------\n");
 
 // Verificação dos alunos aprovados e em recuperação
 
-    for (int i = 1; i <= 5; i++)
+    for (int w = 1; w <= 5; w++)
     {
-        if (media_individual[i] >= 60 )
+        if (media_individual[w] >= 60 )
         {   
-            int aux_aprovados = 0;
-            indice_alunos_aprovados[aux_aprovados] = i;
-            printf("O aluno %s obteve uma média de %.2f e esta APROVADO!.\n", nomes_alunos[i], media_individual[i]);
+            
+            indice_alunos_aprovados[aux_aprovados] = w;
+            printf("O aluno %s obteve uma média de %.2f e esta APROVADO!.\n", nomes_alunos[w], media_individual[w]);
             aux_aprovados++;
         }
-        else if (media_individual[i] < 60)
+        else if (media_individual[w] < 60)
         {
-            int aux_reprovados = 0;
-            indice_alunos_reprovados[aux_reprovados] = i;
-            printf("O aluno %s obteve uma média de %.2f e esta em RECUPERAÇÂO!.\n", nomes_alunos[i], media_individual[i]);
+            
+            indice_alunos_reprovados[aux_reprovados] = w;
+            printf("O aluno %s obteve uma média de %.2f e esta em RECUPERAÇÂO!.\n", nomes_alunos[w], media_individual[w]);
             aux_reprovados++;
         }
         
@@ -124,7 +128,7 @@ void calculo_recuperacao(){
     
     printf("-------------------------------------------\n");
 
-    if (sizeof(indice_alunos_reprovados)!=0)
+    if (aux_reprovados != 0)
     {
         for (int i = 0; i <= sizeof(indice_alunos_reprovados); i++)
         {
@@ -155,7 +159,7 @@ void calculo_recuperacao(){
                 {
                     printf("O aluno %s foi aprovado na recuperação.\n", nomes_alunos[indice_alunos_reprovados[i]]);
 
-                } else 
+                } else if (nota_recuperacao <= 60)
                 {
                     printf("O aluno %s não foi aprovado na recuperação.\n", nomes_alunos[indice_alunos_reprovados[i]]);
 
@@ -178,6 +182,7 @@ void calculo_recuperacao(){
                     printf("O aluno %s não foi aprovado na recuperação.\n", nomes_alunos[indice_alunos_reprovados[i]]);
 
                 }
+                break;
             /*
             default:
                 printf("Valor inválido.\n");
@@ -189,6 +194,7 @@ void calculo_recuperacao(){
             printf("Valor inválido.\n");
             break;
             */
+            break;
         }
         }
 
