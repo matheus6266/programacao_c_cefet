@@ -15,7 +15,9 @@ struct produto {
 struct produto produtos_cadastrados[10];
 
 void cadastro_itens(){
-	
+	/* 
+		Esta função realiza o cadastro dos ítens
+	*/
 	
 	strcpy(produtos_cadastrados[0].nome, "Pe de Moleque");
 	produtos_cadastrados[0].codigo = 13205;
@@ -29,6 +31,9 @@ void cadastro_itens(){
 }
 
 void imprimir_itens(){
+	/*	
+		Esta função realiza a impressão dos itens na tela
+	*/
 
 	
 	printf("------------------Impressão dos Itens------------------\n");
