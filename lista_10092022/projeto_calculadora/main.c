@@ -1,8 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "calc.h"
+#include<locale.h>
 
-/* run this program using the console pauser or add your own getch, system("pause") or input loop */
-
-int main(int argc, char *argv[]) {
+int main() {
+	
+	setlocale(LC_ALL,""); // Utilização dos caracteres na codificação UTF - 8
+	
+	menu();
+	
 	return 0;
 }
