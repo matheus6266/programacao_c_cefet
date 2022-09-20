@@ -141,7 +141,7 @@ void menu(){
 		printf("10 - Saber se um número é primo\n");
 		printf("11 - Calcular o seno de um ângulo (graus)\n");
 		printf("12 - Calcular o cosseno de um ângulo (graus)\n");
-		printf("13 - Calcular o logartimo de base 10 de um número\n");
+		printf("13 - Calcular o logaritmo de base 10 de um número\n");
 		
 		scanf("%d", &opcao_digitada);
 		
@@ -238,7 +238,7 @@ void execucao(int opcao_digitada){
 			
 			printf("Você escolheu a opção QUADRADO. \n");
 			printf("\n");
-			printf("Escreva o número x.\n");
+			printf("Digite a base a ser elevada ao QUADRADO.\n");
 			scanf("%f", &x);
 			resultado = quadrado(x);
 			printf("O quadrado de %.2f é %.2f\n", x, resultado);
@@ -250,7 +250,7 @@ void execucao(int opcao_digitada){
 			
 			printf("Você escolheu a opção CUBO. \n");
 			printf("\n");
-			printf("Escreva o número x.\n");
+			printf("Digite a base a ser elevada ao CUBO.\n");
 			scanf("%f", &x);
 			resultado = cubo(x);
 			printf("O cubo de %.2f é %.2f\n", x, resultado);
@@ -262,7 +262,7 @@ void execucao(int opcao_digitada){
 			
 			printf("Você escolheu a opção SABER SE O NÚMERO É PAR. \n");
 			printf("\n");
-			printf("Escreva o número x.\n");
+			printf("Escreva o número que você deseja saber se é par.\n");
 			scanf("%d", &x_int);
 			par(x_int);
 			printf("\n");
@@ -285,7 +285,7 @@ void execucao(int opcao_digitada){
 			
 			printf("Você escolheu a opção SABER SE O NÚMERO É PRIMO. \n");
 			printf("\n");
-			printf("Escreva o número x. \n");
+			printf("Escreva o número que você deseja saber se é PRIMO. \n");
 			scanf("%d", &x_int);
 			primo(x_int);
 			printf("\n");
@@ -295,7 +295,7 @@ void execucao(int opcao_digitada){
 			
 			printf("Você escolheu a opção SENO. \n");
 			printf("\n");
-			printf("Escreva o número x. \n");
+			printf("Digite o ângulo em GRAUS. \n");
 			scanf("%f", &x);
 			resultado = seno(x);
 			printf("O valor do seno de %.2f é %.2f .\n", x, resultado);
@@ -306,7 +306,7 @@ void execucao(int opcao_digitada){
 			
 			printf("Você escolheu a opção COSSENO. \n");
 			printf("\n");
-			printf("Escreva o número x. \n");
+			printf("Digite o ângulo em GRAUS. \n");
 			scanf("%f", &x);
 			resultado = cosseno(x);
 			printf("O valor do COSSENO de %.2f é %.2f .\n", x, resultado);
@@ -318,7 +318,7 @@ void execucao(int opcao_digitada){
 			
 			printf("Você escolheu a opção LOGARITMO 10. \n");
 			printf("\n");
-			printf("Escreva o número x. \n");
+			printf("Escreva o número que você deseja saber o LOGARITMO. \n");
 			scanf("%f", &x);
 			resultado = logaritmo(x);
 			printf("O valor do LOGARITMO de %.2f é %.2f .\n", x, resultado);
