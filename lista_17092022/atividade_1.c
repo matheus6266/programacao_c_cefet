@@ -41,7 +41,7 @@ int main(){
 	
 	for(i = 0; i <= 2; i++){
 		
-		fprintf(file,"Matéria: %s ", nome_materias[i]);
+		fprintf(file,"Matéria: %s         ", nome_materias[i]);
 		fprintf(file,"Nota: %.2f\n", notas[i]);
 		
 		
