@@ -5,11 +5,90 @@
 #include <string.h>
 # define pi 3.141592653589793238462643383279502884
 
-void escreve_relatorio(){
+int escreve_relatorio(){
+	
+	FILE *file;
+	int opcao_gravacao, status;
+	char projetista[50] = "Matheus Barros Oliveira";
+	
+	printf("Deseja gravar as informações em um relatório?\n");
+	printf("Digite: 1 - Sim / 2 -Não\n");
+	scanf("%d", &opcao_gravacao);
+	printf("\n");
+	
+	if(opcao_gravacao == 1){
+		
+		file = fopen("relatorio", "w");
+	
+	if(file == NULL){
+		
+		printf("Erro ao abrir o arquivo. \n");
+		return 1;
+		
+	}
+	
+	printf("O arquivo foi criado com sucesso. \n");
+	
+	printf("Iniciando a escrita.\n");
+	
+	fprintf(file, "#################################################################\n\n\n", diodo_projeto.modelo);
+	
+	fprintf(file, "Relatório Projeto Térmico do Diodo Modelo: %s\n", diodo_projeto.modelo);
+	
+	if(diodo_projeto.package_type == 1){
+		
+		fprintf(file, "Modelo do case: TO - 220\n");
+		
+	} else {
+		
+		fprintf(file, "Modelo do case: TO - 247\n");
+	}
+	
+	fprintf(file, "Resistência direta: %.2f ohms\n", diodo_projeto.resistencia);
+	fprintf(file, "Resistência Rjc: %.2f ohms\n", diodo_projeto.resistencia_rjc);
+	fprintf(file, "Resistência Rca: %.2f ohms\n", diodo_projeto.resistencia_rca);
+	fprintf(file, "Temperatura máxima da junção: %.2f °C\n", diodo_projeto.temperatura_juncao);
+	fprintf(file, "Potência de condução: %.2f W\n", potencia_juncao);
+	fprintf(file, "Temperatura da junção em condução: %.2f °C\n", temperatura_juncao);
+	fprintf(file, "Corrente média: %.2f A\n", imed);
+	fprintf(file, "Corrente Irms: %.2f A\n", irms);
+	
+	if(diodo_projeto.package_type == 1){
+		
+		fprintf(file, "Modelo do dissipador projetado: %s\n", to_220.modelo);
+		
+	} else {
+		
+		fprintf(file, "Modelo do dissipador projetado: %s\n", to_247.modelo);
+	}
+	
+	fprintf(file, "Temperatura da junção em condução após a instação do dissipador: %.2f °C\n", temperatura_juncao_final);
+	fprintf(file, "Eng responsável: %s\n", projetista);
+	fprintf(file, "Fim do relatório\n");
+	fprintf(file, "\n\n\n#################################################################", diodo_projeto.modelo);
 	
 	
+	printf("Escrita finalizada.\n");
 	
+	status = fclose(file);
 	
+	if(status == 0){
+		
+		puts("Arquivo fechado com sucesso!\n");
+		
+	} else {
+		
+		puts("Erro ao fechar o arquivo !\n");
+		
+	}
+	
+	return 0;
+		
+		
+	} else {
+		
+		return 0;
+	}
 	
 }
 
@@ -115,14 +194,14 @@ void projeto_termico(float i_med, float i_rms){
 						temperatura_juncao_final = (potencia_juncao * resistencia_juncao_final) + temperatura_ambiente;
 						printf("Após a instalação do dissipador de calor a temperatura da junção será: ");
 						printf("%.2f °C.\n", temperatura_juncao_final);
-						printf("Os resultados foram salvos no arquivo relatorio.txt.\n");
 						printf("\n");
+						
+						escreve_relatorio();
 												
 					} else {
 						
 						printf("Os modelos de dissipador que temos cadastrados no sistema não atendem a aplicação. Favor redimensionar o seu projeto.\n");
-						printf("Os resultados foram salvos no arquivo relatorio.txt.\n");
-						printf("\n");
+				
 						
 					}
 					
@@ -139,14 +218,13 @@ void projeto_termico(float i_med, float i_rms){
 						temperatura_juncao_final = (potencia_juncao * resistencia_juncao_final) + temperatura_ambiente;
 						printf("Após a instalação do dissipador de calor a temperatura da junção será: ");
 						printf("%.2f °C.\n", temperatura_juncao_final);
-						printf("Os resultados foram salvos no arquivo relatorio.txt.\n");
 						printf("\n");
+						
+						escreve_relatorio();
 						
 					} else {
 						
 						printf("Os modelos de dissipador que temos cadastrados no sistema não atendem a aplicação. Favor redimensionar o seu projeto.\n");
-						printf("Os resultados foram salvos no arquivo relatorio.txt.\n");
-						printf("\n");
 						
 					}
 			
@@ -180,8 +258,8 @@ void calculo_imed_irms_k(struct onda onda_projeto){
 			
 			imed = (2*onda_projeto.corrente_pico)/pi;        				//Cálculo da corrente média
 			irms = (onda_projeto.corrente_pico)/sqrt(2);      				//Cálculo da corrente Irms
-			printf("O valor da corrente média é: %.2f A\n", imed);
-			printf("O valor da corrente Irms é: %.2f A\n", irms);
+			printf("O valor da corrente média é: %.6f A\n", imed);
+			printf("O valor da corrente Irms é: %.6f A\n", irms);
 			printf("\n");
 			break;
 		
@@ -191,8 +269,8 @@ void calculo_imed_irms_k(struct onda onda_projeto){
 			razao_ciclica = (onda_projeto.ton/periodo);
 			imed = (onda_projeto.corrente_pico)/pi;        						//Cálculo da corrente média
 			irms = (onda_projeto.corrente_pico)*sqrt(razao_ciclica/2);      		//Cálculo da corrente Irms
-			printf("O valor da corrente média é: %.2f A\n", imed);
-			printf("O valor da corrente Irms é: %.2f A\n", irms);
+			printf("O valor da corrente média é: %.6f A\n", imed);
+			printf("O valor da corrente Irms é: %.6f A\n", irms);
 			printf("\n");
 			break;
 			
@@ -202,8 +280,8 @@ void calculo_imed_irms_k(struct onda onda_projeto){
 			razao_ciclica = (onda_projeto.ton/periodo);
 			imed = (razao_ciclica*onda_projeto.corrente_pico);        					//Cálculo da corrente média
 			irms = ((onda_projeto.corrente_pico*sqrt(razao_ciclica)));     				 //Cálculo da corrente Irms
-			printf("O valor da corrente média é: %.2f A\n", imed);
-			printf("O valor da corrente Irms é: %.2f A\n", irms);
+			printf("O valor da corrente média é: %6f A\n", imed);
+			printf("O valor da corrente Irms é: %.6f A\n", irms);
 			printf("\n");
 			break;
 			
@@ -211,11 +289,10 @@ void calculo_imed_irms_k(struct onda onda_projeto){
 			
 			periodo = (1/onda_projeto.frequencia);
 			razao_ciclica = (onda_projeto.ton/periodo);
-			printf("%f", razao_ciclica);
 			imed = (razao_ciclica/2)*onda_projeto.corrente_pico;     					//Cálculo da corrente média
 			irms = ((onda_projeto.corrente_pico*sqrt(razao_ciclica/3)));      				//Cálculo da corrente Irms
-			printf("O valor da corrente média é: %.8f A\n", imed);
-			printf("O valor da corrente Irms é: %.8f A\n", irms);
+			printf("O valor da corrente média é: %.6f A\n", imed);
+			printf("O valor da corrente Irms é: %.6f A\n", irms);
 			printf("\n");
 			break;
 			
@@ -225,8 +302,8 @@ void calculo_imed_irms_k(struct onda onda_projeto){
 			razao_ciclica = (onda_projeto.ton/periodo);
 			imed = (razao_ciclica*(onda_projeto.corrente_ia + onda_projeto.corrente_ib))/2;     																			//Cálculo da corrente média
 			irms = sqrt((razao_ciclica * (pow(onda_projeto.corrente_ib,2) + (onda_projeto.corrente_ia*onda_projeto.corrente_ib) + pow(onda_projeto.corrente_ia,2)))/3);				//Cálculo da corrente Irms
-			printf("O valor da corrente média é: %.2f A\n", imed);
-			printf("O valor da corrente Irms é: %.2f A\n", irms);
+			printf("O valor da corrente média é: %.6f A\n", imed);
+			printf("O valor da corrente Irms é: %.6f A\n", irms);
 			printf("\n");
 			break;
 	}
@@ -307,7 +384,6 @@ void menu_escolha(){
 		printf("Escolha a opção desejada:\n");
 		printf("\n");
 		printf("1 - Cálculo do Dissipador.\n");
-		printf("2 - Mostrar Data Sheet Dissipador de Calor.\n");
 		printf("0 - Sair\n");
 		printf("\n");
 		scanf("%d", &opcao_digitada);
@@ -316,14 +392,11 @@ void menu_escolha(){
 			
 			case 0:
 				break;
+				
 			case 1:
 				cadastro_diodo_onda();
 				break;
-			
-			case 2:
-				printf("Mostrar data sheet");
-				break;
-			
+				
 			default:
 				printf("O valor digitado esta incorreto.\n");
 				break;

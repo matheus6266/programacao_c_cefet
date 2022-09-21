@@ -41,7 +41,7 @@ struct diodo diodo_projeto;
 struct onda onda_projeto;
 float temperatura_juncao_final, potencia_juncao, temperatura_juncao, imed, irms;
 
-void escreve_relatorio();
+int escreve_relatorio();
 void projeto_termico(float i_med, float i_rms);
 void calculo_imed_irms_k(struct onda onda_projeto);
 void cadastro_diodo_onda(); //Esta função realiza o cálculo de potência
