@@ -1,0 +1,3 @@
+void calculo_potencia_diodo(float resistencia_diodo, float tensao_direta_diodo,float razao_ciclica); //Esta função realiza o cálculo de potência
+void mostrar_data_sheet(); // Função para mostrar os dados dos data sheets dos dissipadores
+void gravar_informacao_txt(); // Esta função grava as informacoes da consulta ou cálculo em um arquvio txt
