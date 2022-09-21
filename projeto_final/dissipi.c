@@ -5,6 +5,14 @@
 #include <string.h>
 # define pi 3.141592653589793238462643383279502884
 
+void escreve_relatorio(){
+	
+	
+	
+	
+	
+}
+
 void projeto_termico(float i_med, float i_rms){
 	
 	strcpy(to_220.modelo, "WV-T220-101E");
@@ -15,7 +23,7 @@ void projeto_termico(float i_med, float i_rms){
 	to_247.package_type = 2;
 	to_247.resistencia_termica = 12;	
 	
-	float potencia_juncao, temperatura_juncao, temperatura_ambiente, temperatura_juncao_final;
+	float temperatura_ambiente;
 	float resistencia_juncao_ideal, resistencia_dissipador_ideal, resistencia_rcd, resistencia_juncao_final;
 	int opcao_continuacao, opcao_pasta;
 	
@@ -107,10 +115,14 @@ void projeto_termico(float i_med, float i_rms){
 						temperatura_juncao_final = (potencia_juncao * resistencia_juncao_final) + temperatura_ambiente;
 						printf("Após a instalação do dissipador de calor a temperatura da junção será: ");
 						printf("%.2f °C.\n", temperatura_juncao_final);
+						printf("Os resultados foram salvos no arquivo relatorio.txt.\n");
+						printf("\n");
 												
 					} else {
 						
 						printf("Os modelos de dissipador que temos cadastrados no sistema não atendem a aplicação. Favor redimensionar o seu projeto.\n");
+						printf("Os resultados foram salvos no arquivo relatorio.txt.\n");
+						printf("\n");
 						
 					}
 					
@@ -127,10 +139,14 @@ void projeto_termico(float i_med, float i_rms){
 						temperatura_juncao_final = (potencia_juncao * resistencia_juncao_final) + temperatura_ambiente;
 						printf("Após a instalação do dissipador de calor a temperatura da junção será: ");
 						printf("%.2f °C.\n", temperatura_juncao_final);
+						printf("Os resultados foram salvos no arquivo relatorio.txt.\n");
+						printf("\n");
 						
 					} else {
 						
 						printf("Os modelos de dissipador que temos cadastrados no sistema não atendem a aplicação. Favor redimensionar o seu projeto.\n");
+						printf("Os resultados foram salvos no arquivo relatorio.txt.\n");
+						printf("\n");
 						
 					}
 			
@@ -153,7 +169,7 @@ void projeto_termico(float i_med, float i_rms){
 
 void calculo_imed_irms_k(struct onda onda_projeto){
 	
-	float imed, irms, razao_ciclica, periodo;
+	float razao_ciclica, periodo;
 	
 	printf("--------Início dos cálculos de corrente média e corrente rms.----------\n");
 	printf("\n");
