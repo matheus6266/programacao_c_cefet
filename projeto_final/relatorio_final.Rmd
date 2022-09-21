@@ -71,6 +71,8 @@ knitr::include_graphics("images/print_relatorio.png")
 Pode - se concluir com a realização deste projeto que apesar de ser uma linguagem antiga o C pode ser utilizado para a resolução de problemas atuais. Este programa pode ser mais facilmente implementado em outras linguagens POO (Programação Orientada a Objetos ) que são mais amigáveis e possuem mais ferramentas gráficas, mas que no fundam rodam C em seu "core".
 Não existe uma linguagem pior ou melhor, existe o problema a ser resolvido e o C, apesar de ser uma linguagem fortemente tipada e não ser orientada a objetos, possuem uma grande relevância na indústria de software atual, principalmente quando se fala em sistemas embarcados. 
 
+[Clique aqui para acessar o Projeto no GitHub:](https://github.com/matheus6266/programacao_c_cefet/tree/main/projeto_final)
+
 # 7: Bibliografia:
 
 LOPES, Victor **Introdução à Linguagem C**,2022. 42 slides. Acesso em: 18/09/2022
