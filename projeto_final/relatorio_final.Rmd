@@ -1,0 +1,90 @@
+---
+title: 'Projeto Final: Calculadora Térmica'
+author: "Matheus Barros Oliveira"
+date: '2022-09-21'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r echo=FALSE, fig.alig='center',out.width="100%",out.height="100%"}
+knitr::include_graphics("images/cabecalho.png")
+```
+
+# 1: Introdução:
+
+Um dos maiores problemas quando se fala em circuitos eletrônicos é a tempertura gerada pelos dispositivos durante o seu funcionamento. O aumento desta temperatura pode gerar mau funcionamento nos equipamentos e até causar a queima dos mesmos caso eles não estejam bem dimensionados para a aplicação.
+Existem várias formas de se minimizar o impacto da temperatura nestes dispositivos, dentre elas podemos citar: ventoinhas, climatização forçada, trocadores de calor, células Peltier e entre outras.
+
+# 2: Objetivo:
+
+O objetivo deste trabalho é desenvolver um programa em linguagem C para realizar o cálculo de um dissipador de calor para circuitos eletrônicos que utilizam diodos de potência.
+
+# 3: Materiais e Métodos:
+
+Para a realização deste trabalho foi utilizada o DEV C++ (versão: 5.11), compilador GCC 4.9.2 64 - bits e o Rstudio (versão: 4.1.2) para a produção do relatório escrito.
+
+# 4: Descritivo de Programa:
+
+# 4.1 Resumo:
+
+Este programa escolhe um modelo de dissipador de calor, dentro os dois modelos salvos na base de dados do programa, através das informações das características de um diodo de potência inseridas por um usuário no programa. O software foi desenvolvido para o cálculo de dissipadores de calor para os diodos que possuem o case TO - 220 ou TO - 247.
+
+# 4.2: Detalhamento do funcionamento:
+
+Com o objetivo de tornar o código mais organizado, programa foi desenvolvido em um arquivo de projeto chamado "projeto_final.c" que possui o script "main.c", que contém a função principal do programa, o script "dissipi.c" que contém todas as funções utilizadas no projeto e o arquivo header "dissipi.h" que contém os protótipos das funções utilizadas. 
+
+# 4.2.1: Entrada de Dados:
+
+Inicialmente a função "int main()" é chamada e dentro dela chamados a função "menu_escolha()", que esta presente na biblioteca "dissipi.h". A função "menu_escolha()" tem como objetivo solicitar ao usuario que escolha a opção de realizar o projeto do dissipador quantas vezes eles quiser até o mesmo digitar a teclar "0". Após a escolha do usuário para ser realizado o cálculo, chama-se a função "cadastro_diodo_onda()" e esta função é responsável por coletar as informações do diodo e da forma de onda que alimenta o circuito. 
+
+# 4.2.2: Cálculos:
+
+Com as informações coletadas na função "cadastro_diodo_onda()" é chamada a função "calculo_imed_irms_k()" onde é realizado os cálculos da corrente média Imed e corrente Irms. Com as correntes calculadas, é chamada a função projeto_termico() onde são realizados os cálculos de potência consumida, temperatura de junção, Rda e por fim é selecionado o dissipador de calor que melhor se adequa à situação.
+
+# 4.2.3: Salvando as Informações:
+
+Com todas as informações coletas e os cálculos realizados, é chamada a função "escreve_relatorio()" onde são salvadas todas essas informações em um arquivo .txt chamado "relatorio".
+
+# 4.3: Objetos Especiais:
+
+Durante o desenvolvimento do programa foram criadas três classes especiais para facilitar na manipulação dos dados: diodo (usada para salvar as informações do diodo em análise), onda (usada para armazenar as características da onda) e dissipador (usada para armazenar as informações dos dois modelos de dissipadores utilizados no projeto).
+
+# 4.4: Bibilioteca "dissipi.h":
+
+Foi criado um arquivo header "dissipi.h" que contém a declaração dos objetos especiais citados acima, as variáveis globais utilizadas no projeto e os protótipos de função usados no desenvolvimento do projeto.
+
+# 5: Resultados:
+
+Foram realizados vários testes de funcionamento no programa e o mesmo não apresentou problemas. Segue abaixo o print da tela contendo os resultados do cálculo de um diodo contendo as seguintes informações: modelo do diodo: MBR20100CT, resistência de condução: $10,1m\Omega$, tensão de condução: $620mV$, forma de onda: triangular, tensão de pico: $60V$, corrente pico: $20A$ frequência da onda: $20kHz$ e temperatura ambiente: $30^{\circ}C$. O exercício que estas informações foram retiradas encontra-se em anexo com o nome Trabalho 01 ICE - Exercício 1.
+
+# Figura 1: Print da tela contendo os resultados dos cálculos
+
+```{r echo=FALSE, fig.alig='center',out.width="100%",out.height="100%"}
+knitr::include_graphics("images/print_relatorio.png")
+```
+
+# 6: Conclusão:
+
+Pode - se concluir com a realização deste projeto que apesar de ser uma linguagem antiga o C pode ser utilizado para a resolução de problemas atuais. Este programa pode ser mais facilmente implementado em outras linguagens POO (Programação Orientada a Objetos ) que são mais amigáveis e possuem mais ferramentas gráficas, mas que no fundam rodam C em seu "core".
+Não existe uma linguagem pior ou melhor, existe o problema a ser resolvido e o C, apesar de ser uma linguagem fortemente tipada e não ser orientada a objetos, possuem uma grande relevância na indústria de software atual, principalmente quando se fala em sistemas embarcados. 
+
+# 7: Bibliografia:
+
+LOPES, Victor **Introdução à Linguagem C**,2022. 42 slides. Acesso em: 18/09/2022
+
+LOPES, Victor **Estruturas de Programação**,2022. 33 slides. Acesso em: 18/09/2022
+
+LOPES, Victor **Strings, Structs, Declarações e outros**,2022. 33 slides. Acesso em: 18/09/2022
+
+LOPES, Victor **Principais Cabeçalhos (bibliotes) e organização de códigos*,2022. 41 slides. Acesso em: 18/09/2022
+
+ROCHA, Anderson **Interruptores e Comandos Eletrônicos - Diodo de Potência**,2022. 37 slides. Acesso em: 18/09/2022
+
+
+
+
+
+

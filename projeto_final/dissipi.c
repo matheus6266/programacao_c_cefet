@@ -402,13 +402,21 @@ void menu_escolha(){
 				break;
 		}
 		
-		printf("\n");
-		printf("Deseja continuar a utilizar a ferramenta ?\n");
-		printf("Digite:\n");
-		printf("\n");
-		printf("1 - Sim\n");
-		printf("2 - Não\n");
-		scanf("%d", &opcao_digitada);
+		if(opcao_digitada == 0){
+			
+			break;
+			
+		} else {
+			
+			printf("\n");
+			printf("Deseja continuar a utilizar a ferramenta ?\n");
+			printf("Digite:\n");
+			printf("\n");
+			printf("1 - Sim\n");
+			printf("2 - Não\n");
+			scanf("%d", &opcao_digitada);
+			
+		}
 		
 		if(opcao_digitada == 2){
 			break;
