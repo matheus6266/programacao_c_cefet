@@ -5,17 +5,19 @@
 	Criar os strutucs com os métodos e atributos dos tipos de ondas e tipos de dissipadores
 */
 
-	struct diodo {
+struct diodo {
 		
 		char modelo[50];
+		int package_type;
 		float resistencia;
 		float tensao_direta;
 		float resistencia_rjc;
 		float resistencia_rca;
+		float temperatura_juncao;
 		
-	};
+};
 	
-	struct onda {
+struct onda {
 		
 		int forma_onda;
 		float frequencia;
@@ -23,9 +25,18 @@
 		float corrente_pico;
 		float corrente_ia;
 		float corrente_ib;
-	};
+};
 	
+struct dissipador {
+		
+		char modelo[50];
+		int package_type;
+		int resistencia_termica;
+		
+};
 	
+struct dissipador to_220;
+struct dissipador to_247;
 struct diodo diodo_projeto;
 struct onda onda_projeto;
 	
