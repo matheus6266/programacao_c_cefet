@@ -6,6 +6,7 @@
 # define pi 3.141592653589793238462643383279502884
 
 int escreve_relatorio(){
+	// Esta função realiza a gravação das informações dos cálculos no arquivo "relatorio.txt"
 	
 	FILE *file;
 	int opcao_gravacao, status;
@@ -93,11 +94,14 @@ int escreve_relatorio(){
 }
 
 void projeto_termico(float i_med, float i_rms){
+	// Esta função realiza o projeto térmico do dissipador
 	
+	// Declaração do dissipador modelo: "WV-T220-101E"
 	strcpy(to_220.modelo, "WV-T220-101E");
 	to_220.package_type = 1;
 	to_220.resistencia_termica = 13;
 	
+	// Declaração do dissipador modelo: "WV-T247-101E"
 	strcpy(to_247.modelo, "WV-T247-101E");
 	to_247.package_type = 2;
 	to_247.resistencia_termica = 12;	
@@ -106,16 +110,16 @@ void projeto_termico(float i_med, float i_rms){
 	float resistencia_juncao_ideal, resistencia_dissipador_ideal, resistencia_rcd, resistencia_juncao_final;
 	int opcao_continuacao, opcao_pasta;
 	
-	//Condição para determinar o valor de Rcd
-	
+	// 4.5.7: Cálculo Potência Condução: 
 	potencia_juncao = (diodo_projeto.tensao_direta*i_med) + (diodo_projeto.resistencia * pow(i_rms, 2));
 	
 	printf("Informe a temperatura ambiente do local de instalação do diodo em °C: \n");
 	scanf("%f", &temperatura_ambiente);
 	
+	// 4.5.8 Cálculo da Temperatura de Junção:
 	temperatura_juncao = potencia_juncao * (diodo_projeto.resistencia_rjc + diodo_projeto.resistencia_rca) + temperatura_ambiente;
 	
-	
+	// Condição para informar ao ususário sobre a necessidade ou não da instalação do dissipador de calor
 	if((temperatura_juncao >= diodo_projeto.temperatura_juncao) || (temperatura_juncao >= diodo_projeto.temperatura_juncao*0.8)){
 		
 		printf("A temperatura de junção calculda foi %.2f °C e esta acima da temperatura máxima de junção do diodo que é %.2f °C.\n",temperatura_juncao, diodo_projeto.temperatura_juncao);
@@ -136,6 +140,7 @@ void projeto_termico(float i_med, float i_rms){
 	printf("2 - Encerrar cálculo.\n");
 	scanf("%d", &opcao_continuacao);
 	
+	// Condição para a continuação da realização dos cálculos
 	switch(opcao_continuacao){
 		
 		case 1:
@@ -144,6 +149,7 @@ void projeto_termico(float i_med, float i_rms){
 			printf("1 - Sim / 2 - Não\n");
 			scanf("%d", &opcao_pasta);
 			
+			// Condição para verificar qual o valor de Rcd será considerada
 			switch(opcao_pasta){
 				
 				case 1:
@@ -178,9 +184,14 @@ void projeto_termico(float i_med, float i_rms){
 					break;
 			}
 			
-			
+			// Cálculo da resistência térmica total máxima do conjunto para uma temperatura máxima de 80% da temperatura máxima de junção
 			resistencia_juncao_ideal = ((diodo_projeto.temperatura_juncao*0.8) - temperatura_ambiente)/potencia_juncao;
+			
+			// 4.5.9 Cálculo do Dissipador de Calor:
 			resistencia_dissipador_ideal = resistencia_juncao_ideal - diodo_projeto.resistencia_rjc - resistencia_rcd;
+			
+			// Condição para verificar se os modelos de dissipadores cadastrados atendem à aplicação tanto modelo quanto pelo valor
+			// da resisteência térmica
 			
 			switch(diodo_projeto.package_type){
 				
@@ -246,6 +257,7 @@ void projeto_termico(float i_med, float i_rms){
 }
 
 void calculo_imed_irms_k(struct onda onda_projeto){
+	// Função para o cálculo das correntes Imes e Irms
 	
 	float razao_ciclica, periodo;
 	
@@ -256,8 +268,10 @@ void calculo_imed_irms_k(struct onda onda_projeto){
 		
 		case 1:
 			
-			imed = (2*onda_projeto.corrente_pico)/pi;        				//Cálculo da corrente média
-			irms = (onda_projeto.corrente_pico)/sqrt(2);      				//Cálculo da corrente Irms
+			// 4.5.1: Cálculo da Corrente Média/RMS (Onda Completa Sinusoidal)
+
+			imed = (2*onda_projeto.corrente_pico)/pi;        				
+			irms = (onda_projeto.corrente_pico)/sqrt(2);      				
 			printf("O valor da corrente média é: %.6f A\n", imed);
 			printf("O valor da corrente Irms é: %.6f A\n", irms);
 			printf("\n");
@@ -265,10 +279,12 @@ void calculo_imed_irms_k(struct onda onda_projeto){
 		
 		case 2:
 			
+			// 4.5.2: Cálculo da Corrente Média/RMS (Onda Sinusoidal Pulsada)
+						
 			periodo = (1/onda_projeto.frequencia);
-			razao_ciclica = (onda_projeto.ton/periodo);
-			imed = (onda_projeto.corrente_pico)/pi;        						//Cálculo da corrente média
-			irms = (onda_projeto.corrente_pico)*sqrt(razao_ciclica/2);      		//Cálculo da corrente Irms
+			razao_ciclica = (onda_projeto.ton/periodo); // 4.5.6 Ciclo de Trabalho:
+			imed = (onda_projeto.corrente_pico)/pi;        						
+			irms = (onda_projeto.corrente_pico)*sqrt(razao_ciclica/2);      		
 			printf("O valor da corrente média é: %.6f A\n", imed);
 			printf("O valor da corrente Irms é: %.6f A\n", irms);
 			printf("\n");
@@ -276,10 +292,12 @@ void calculo_imed_irms_k(struct onda onda_projeto){
 			
 		case 3:
 			
+			// 4.5.3: Cálculo da Corrente Média/RMS (Onda Quadrada):
+
 			periodo = (1/onda_projeto.frequencia);
-			razao_ciclica = (onda_projeto.ton/periodo);
-			imed = (razao_ciclica*onda_projeto.corrente_pico);        					//Cálculo da corrente média
-			irms = ((onda_projeto.corrente_pico*sqrt(razao_ciclica)));     				 //Cálculo da corrente Irms
+			razao_ciclica = (onda_projeto.ton/periodo); // 4.5.6 Ciclo de Trabalho:
+			imed = (razao_ciclica*onda_projeto.corrente_pico);        					
+			irms = ((onda_projeto.corrente_pico*sqrt(razao_ciclica)));     				 
 			printf("O valor da corrente média é: %6f A\n", imed);
 			printf("O valor da corrente Irms é: %.6f A\n", irms);
 			printf("\n");
@@ -287,10 +305,12 @@ void calculo_imed_irms_k(struct onda onda_projeto){
 			
 		case 4:
 			
+			// 4.5.4: Cálculo da Corrente Média/RMS (Onda Tringular):
+			
 			periodo = (1/onda_projeto.frequencia);
-			razao_ciclica = (onda_projeto.ton/periodo);
-			imed = (razao_ciclica/2)*onda_projeto.corrente_pico;     					//Cálculo da corrente média
-			irms = ((onda_projeto.corrente_pico*sqrt(razao_ciclica/3)));      				//Cálculo da corrente Irms
+			razao_ciclica = (onda_projeto.ton/periodo); // 4.5.6 Ciclo de Trabalho:
+			imed = (razao_ciclica/2)*onda_projeto.corrente_pico;     					
+			irms = ((onda_projeto.corrente_pico*sqrt(razao_ciclica/3)));      				
 			printf("O valor da corrente média é: %.6f A\n", imed);
 			printf("O valor da corrente Irms é: %.6f A\n", irms);
 			printf("\n");
@@ -298,10 +318,12 @@ void calculo_imed_irms_k(struct onda onda_projeto){
 			
 		case 5:
 			
+			// 4.5.5: Cálculo da Corrente Média/RMS (Onda Trapezoidal):
+			
 			periodo = (1/onda_projeto.frequencia);
-			razao_ciclica = (onda_projeto.ton/periodo);
-			imed = (razao_ciclica*(onda_projeto.corrente_ia + onda_projeto.corrente_ib))/2;     																			//Cálculo da corrente média
-			irms = sqrt((razao_ciclica * (pow(onda_projeto.corrente_ib,2) + (onda_projeto.corrente_ia*onda_projeto.corrente_ib) + pow(onda_projeto.corrente_ia,2)))/3);				//Cálculo da corrente Irms
+			razao_ciclica = (onda_projeto.ton/periodo); // 4.5.6 Ciclo de Trabalho:
+			imed = (razao_ciclica*(onda_projeto.corrente_ia + onda_projeto.corrente_ib))/2;     																			
+			irms = sqrt((razao_ciclica * (pow(onda_projeto.corrente_ib,2) + (onda_projeto.corrente_ia*onda_projeto.corrente_ib) + pow(onda_projeto.corrente_ia,2)))/3);				
 			printf("O valor da corrente média é: %.6f A\n", imed);
 			printf("O valor da corrente Irms é: %.6f A\n", irms);
 			printf("\n");
@@ -316,7 +338,7 @@ void calculo_imed_irms_k(struct onda onda_projeto){
 }
 
 void cadastro_diodo_onda(){
-	
+	// Função para dar entrada nas informações do diodo e qual o tipo de onda esta alimentando o circuito
 	
 	printf("Você escolheu a opção Projeto Dissipador de Calor.\n");
 	printf("\n");
@@ -350,8 +372,18 @@ void cadastro_diodo_onda(){
 	printf("\n");
 	printf("Informe o valor da frequência da onda em (Hz):\n");
 	scanf("%f", &onda_projeto.frequencia);
-	printf("Informe o valor do Ton em (segundos):\n");
-	scanf("%f", &onda_projeto.ton);
+	
+	if(onda_projeto.forma_onda == 1){
+		
+		onda_projeto.ton = 1;
+		
+	} else{
+		
+		printf("Informe o valor do Ton em (segundos):\n");
+		scanf("%f", &onda_projeto.ton);
+			
+	}
+	
 
 	if(onda_projeto.forma_onda == 5){
 		
@@ -373,6 +405,7 @@ void cadastro_diodo_onda(){
 	
 
 void menu_escolha(){
+	// Função que inicia o cálculo e somente é concluída após a solicitação do usuário
 	
 	int opcao_digitada, opcao_continuacao;
 	
